@@ -153,18 +153,7 @@ class FocusSession{
 s = new FocusSession(); 
 
 const onOpen = () => {
-  //TODO: get session status
- /*
-  var fulfill = false; 
-  var text= "Start"; //TODO: change according to status 
-  var status= s.get_status(); 
-  if (status && !fulfill){
-    text= "THINK CAREFULLY";
-  }
-  else if (status && fulfill){
-    text= "Stop";
-  }
-  */
+ 
   SpreadsheetApp.getUi()
     .createMenu('Time')
     .addItem("Trigger", "trigger")
