@@ -36,7 +36,7 @@ The cell in the middle (F2) indicates the status of the session. "ON" means the 
 
 There is basically only one button. Look for Time in the top bar> Trigger. Triggering either starts or ends a session. Play around a bit to see what it does. 
 
-Users may change to another sheet upon filling up one sheet. In that case, see the sheet "new_record_template", the bare minimum for starting another sheet. It is recommended to copy and paste the cells from the old sheet then modify it rather than filling in from scratch to avoid data type misrepresentations, which this script is quite prone to. After that, users should modify the script, specifically the variable SHEETNAME. 
+Users may change to another sheet upon filling up one sheet. In that case, see the sheet "new_record_template", the bare minimum for starting another sheet. It is recommended to copy and paste the cells from the old sheet then modify it rather than filling in from scratch to avoid data type misrepresentations, which this script is quite prone to. After that, users should modify the script, specifically the variable SHEET_NAME. 
 
 
 ## Contributing
