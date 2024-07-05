@@ -13,6 +13,9 @@ a simple Google Sheet Apps Script to log focus sessions
 - [Usage](#usage)
 
 ## Installation
+
+IMPORTANT: the script should be run in a web browser
+
 Go to the link: https://docs.google.com/spreadsheets/d/1q8CxKEbHPaCJmUCxmFEkyYJvoPgsValv507PN1Fxvms/edit?usp=sharing and make a copy of the Google Sheet. On your copy, on the top bar click Extensions  > Apps Script. Give the necessary permissions to run the script. 
 
 ==Modify the script==
