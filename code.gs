@@ -1,8 +1,16 @@
-//CHANGEME
-const SESSION_LENGTH= 50; //length of a session in minutes
-const WEEKLY_TARGET= 65; //number of sessions per week
-const SHEET_NAME= "record1"; //the sheet to run the script on 
-//END OF CHANGEME
+class Config{
+  constructor(){
+
+    var config= SpreadsheetApp.getActiveSpreadsheet().getSheetByName("config")
+
+    this.SESSION_LENGTH= config.getRange(1,3).getValue(); 
+    this.WEEKLY_TARGET= config.getRange(2,3).getValue(); //number of sessions per week
+    this.SHEET_NAME= config.getRange(3,3).getValue(); ; //the sheet to run the script on
+  }
+
+}
+
+const CONFIG= new Config(); 
 
 
 //positions of rows and columns 
@@ -18,7 +26,7 @@ const WEEK_COLS=[1,8]; //index starts at 1. 1 corresponds to the 1 on the Day si
 const SESSION_STATUS_COLS=[9,10];  //index starts at 1. "Total" and "Remaining" columns on the week side 
 
 
-var records= SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME); 
+var records= SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEET_NAME); 
 var day_data= records.getRange(DAY_RECORD_START_ROW, DAY_RECORD_START_COL, (records.getLastRow()-DAY_RECORD_START_ROW+1), DAY_RECORD_NUM_COL).getValues(); 
 
 
@@ -31,7 +39,7 @@ function getCurrentTime() {
 
 function calculateSessionBetweenDates(date1, date2) {
   var timeDiff = Math.abs(date2 - date1); // Absolute difference in milliseconds
-  var sessionDiff = (timeDiff / (1000 * 60* SESSION_LENGTH)); // Convert milliseconds to minutes then session
+  var sessionDiff = (timeDiff / (1000 * 60* CONFIG.SESSION_LENGTH)); // Convert milliseconds to minutes then session
   var sessionDiff= Math.round(sessionDiff*10)/10; //round to 1dp 
   return sessionDiff;
 }
@@ -58,7 +66,7 @@ function update_one_week(week, session_amount){//update one week's stat given on
 
     var original_remain= parseFloat(records.getRange(row_index, SESSION_STATUS_COLS[1]).getValue()); 
       if (isNaN(original_remain)) {
-        original_remain = WEEKLY_TARGET;
+        original_remain = CONFIG.WEEKLY_TARGET;
       }
     var new_remain= original_remain-session_amount; 
     if (new_remain<0) {
@@ -68,6 +76,8 @@ function update_one_week(week, session_amount){//update one week's stat given on
 
 
 }
+
+
 
 class FocusSession{
   constructor(){
