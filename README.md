@@ -14,15 +14,16 @@ a simple Google Sheet Apps Script to log focus sessions
 
 ## Installation
 
-IMPORTANT: the script should be run in a web browser
+Requirement: the script should be run in a web browser
 
 Go to the link: https://docs.google.com/spreadsheets/d/1q8CxKEbHPaCJmUCxmFEkyYJvoPgsValv507PN1Fxvms/edit?usp=sharing and make a copy of the Google Sheet. On your copy, on the top bar click Extensions  > Apps Script. Give the necessary permissions to run the script. 
 
-==Modify the script==
+## Setup
 
-In the script, change the variables under #CHANGEME. If you ever wish to change the layout of the Google sheet, you may change the values under //positions of rows and columns. It is not encouraged. 
+==Modify the sheets==
 
-==Modify the sheet==
+In "config", 
+- modify the various user-defined parameters. Refresh the webpage to apply changes. 
 
 In "record1", 
 - modify the Date column. Note that the script will have no effect on dates that are not the current day the script is run. i.e. running the script on 6 July, 2024 will not cause changes to rows of other days.
@@ -36,7 +37,7 @@ The cell in the middle (F2) indicates the status of the session. "ON" means the 
 
 There is basically only one button. Look for Time in the top bar> Trigger. Triggering either starts or ends a session. Play around a bit to see what it does. 
 
-Users may change to another sheet upon filling up one sheet. In that case, see the sheet "new_record_template", the bare minimum for starting another sheet. It is recommended to copy and paste the cells from the old sheet then modify it rather than filling in from scratch to avoid data type misrepresentations, which this script is quite prone to. After that, users should modify the script, specifically the variable SHEET_NAME. 
+Users may change to another sheet upon filling up one sheet. In that case, see the sheet "new_record_template", the bare minimum for starting another sheet. It is recommended to copy and paste the cells from the old sheet then modify it rather than filling in from scratch to avoid data type misrepresentations, which this script is quite prone to. After that, users should modify the variable SHEET_NAME in the sheet "config". 
 
 
 ## Contributing
