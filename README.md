@@ -1,7 +1,7 @@
 # FocusSession
-a simple Google Sheet Apps Script to log focus sessions
+a simple Google Sheet Apps Script to log focus sessions based on the Pomorodo method
 
-## Key features/ distinctions from commonplace pomorodo apps
+## Key features/ distinctions from commonplace Pomorodo apps
 - In the case that the user works beyond the specified session length, they are not interrupted by focus-breaking alarms. 
 - They are, however, still discouraged from ending a session early. 
 - Easily cross platform as long as run on a browser. 
