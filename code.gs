@@ -108,7 +108,7 @@ class FocusSession{
       return; 
     }
 
-    console.log(parseInt(target_row)+2); 
+    //console.log(parseInt(target_row)+2); 
 
     if (!this.get_status()){
       records.getRange(parseInt(target_row)+2, DAY_RECORD_LAST_TIME+1).setValue(getCurrentTime());
@@ -121,7 +121,7 @@ class FocusSession{
       const [hours, minutes] = String(day_data[target_row][DAY_RECORD_LAST_TIME]).split(':');
 
       var last_start = new Date(now.getFullYear(),day_data[target_row][DAY_RECORD_DATE_COL].getMonth(), day_data[target_row][DAY_RECORD_DATE_COL].getDate(),  parseInt(hours), parseInt(minutes)); 
-      console.log(parseInt(hours)); 
+      //console.log(parseInt(hours)); 
       var session_length= calculateSessionBetweenDates(now, last_start); //how many sessions 
       if (isNaN(session_length)) {
         session_length = 0;
@@ -138,8 +138,8 @@ class FocusSession{
       if (isNaN(original_duration)) {
         original_duration = 0;
       }
-      console.log(last_start); 
-      console.log(session_length); 
+      //console.log(last_start); 
+      //console.log(session_length); 
       records.getRange(parseInt(target_row)+2, DAY_RECORD_DURATION+1).setValue(original_duration+session_length);
       records.getRange(SESSION_STATUS_POS[0],SESSION_STATUS_POS[1]).setValue("OFF"); 
       update_one_week(records.getRange(parseInt(target_row)+2, WEEK_COLS[0]).getValue(), session_length);
@@ -159,6 +159,7 @@ const onOpen = () => {
     .addItem("Trigger", "trigger")
     .addToUi();
 
+  records.getRange(DAY_RECORD_START_ROW, DAY_RECORD_LAST_TIME+1, (records.getLastRow()-DAY_RECORD_START_ROW+1)).setNumberFormat('@STRING@'); //PATCH: format the Last time column to string 
   
 };
 
