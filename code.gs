@@ -104,6 +104,30 @@ class FocusSession{
     
 }
 
+  _get_closest_day(){
+    var today= new Date();
+    var min_diff=-1;
+    var min_row;  
+    for (var row in day_data){
+        if ((today.getDate()== day_data[row][DAY_RECORD_DATE_COL].getDate())&&(today.getMonth()==day_data[row][DAY_RECORD_DATE_COL].getMonth())){
+          //SpreadsheetApp.getActive().toast(day_data[row][3], "Title", 2);
+          continue; //don't count today 
+        }
+        var diff= calculateSessionBetweenDates(today, day_data[row][DAY_RECORD_DATE_COL]);
+        if (min_diff<0){ //illegal value 
+          min_diff= diff; //the first difference 
+          min_row=row; 
+        }
+        else if (min_diff>=diff){//takes latter rows 
+          min_diff= diff;
+          min_row= row;  
+        }
+
+
+    }
+    return min_row; 
+  }
+
   _trigger(){
     var today= new Date();
     var target_row=-1; 
@@ -128,9 +152,13 @@ class FocusSession{
     }
     if (this.get_status()){
       var now= new Date();
+      var today_row= target_row; 
+      if (!String(day_data[target_row][DAY_RECORD_LAST_TIME])) {
+          target_row= this._get_closest_day(); 
+          target_row= parseInt(target_row); 
+        }
       const [hours, minutes] = String(day_data[target_row][DAY_RECORD_LAST_TIME]).split(':');
-
-      var last_start = new Date(now.getFullYear(),day_data[target_row][DAY_RECORD_DATE_COL].getMonth(), day_data[target_row][DAY_RECORD_DATE_COL].getDate(),  parseInt(hours), parseInt(minutes)); 
+      var last_start = new Date(day_data[target_row][DAY_RECORD_DATE_COL].getFullYear(),day_data[target_row][DAY_RECORD_DATE_COL].getMonth(), day_data[target_row][DAY_RECORD_DATE_COL].getDate(),  parseInt(hours), parseInt(minutes)); 
       //console.log(parseInt(hours)); 
       var session_length= calculateSessionBetweenDates(now, last_start); //how many sessions 
       if (isNaN(session_length)) {
@@ -144,15 +172,15 @@ class FocusSession{
       }
 
       //update the duration column
-      var original_duration= parseFloat(day_data[target_row][DAY_RECORD_DURATION]); 
+      var original_duration= parseFloat(day_data[today_row][DAY_RECORD_DURATION]); 
       if (isNaN(original_duration)) {
         original_duration = 0;
       }
       //console.log(last_start); 
       //console.log(session_length); 
-      records.getRange(parseInt(target_row)+2, DAY_RECORD_DURATION+1).setValue(original_duration+session_length);
+      records.getRange(parseInt(today_row)+2, DAY_RECORD_DURATION+1).setValue(original_duration+session_length);
       records.getRange(SESSION_STATUS_POS[0],SESSION_STATUS_POS[1]).setValue("OFF"); 
-      update_one_week(records.getRange(parseInt(target_row)+2, WEEK_COLS[0]).getValue(), session_length);
+      update_one_week(records.getRange(parseInt(today_row)+2, WEEK_COLS[0]).getValue(), session_length);
     }
     
   
